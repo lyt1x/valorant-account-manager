@@ -23,7 +23,7 @@ namespace ValorantAccountManager.MVVM.View
             FolderBox.ItemsSource = nonDefaultFolders;
             if (nonDefaultFolders.Count > 0)
             {
-                FolderBox.SelectedIndex = 0;
+                FolderBox.SelectedItem = null;
             }
         }
 

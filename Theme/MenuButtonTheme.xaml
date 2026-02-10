@@ -30,10 +30,6 @@
                             <Setter TargetName="border" Property="Background" Value="#E63946"/>
                             <Setter Property="Foreground" Value="#FFFFFF"/>
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#FF4655"/>
-                            <Setter Property="Foreground" Value="#FFFFFF"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
