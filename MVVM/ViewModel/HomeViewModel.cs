@@ -58,8 +58,7 @@ namespace ValorantAccountManager.MVVM.ViewModel
         {
             try
             {
-                var json = await ValorantApiRequest.GetMmrAsync(
-                    acc.Name, acc.Tag, acc.Region);
+                var json = await ValorantApiRequest.GetMmrAsync(acc.Name, acc.Tag, acc.Region);
 
                 var response = json;
 
@@ -69,7 +68,6 @@ namespace ValorantAccountManager.MVVM.ViewModel
 
                 var rrPart = response.Split("RR:")[1];
                 var elo = int.Parse(rrPart.Split(' ')[1]);
-
                 App.Current.Dispatcher.Invoke(() =>
                 {
                     acc.Rank = rank;

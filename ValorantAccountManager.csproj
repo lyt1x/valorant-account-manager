@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <None Update="Data\accounts.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Data\createdb.py">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

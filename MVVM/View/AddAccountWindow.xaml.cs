@@ -1,5 +1,6 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ValorantAccountManager.MVVM.Model;
 
 namespace ValorantAccountManager.MVVM.View
@@ -14,6 +15,14 @@ namespace ValorantAccountManager.MVVM.View
             RegionBox.SelectedIndex = 3; // EU по умолчанию
         }
 
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Result = new Account
@@ -26,6 +35,11 @@ namespace ValorantAccountManager.MVVM.View
             };
 
             DialogResult = true;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

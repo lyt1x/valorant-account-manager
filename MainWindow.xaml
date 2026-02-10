@@ -7,71 +7,162 @@
         xmlns:viewModel="clr-namespace:ValorantAccountManager.MVVM.ViewModel"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Height="600" Width="1200"
-        WindowStyle = "SingleBorderWindow"
+        Height="650" Width="1300"
+        WindowStyle="None"
         Title="Valorant Account Manager"
-        ResizeMode= "CanResize"
+        ResizeMode="CanResize"
         Background="Transparent"
-        AllowsTransparency="False"
-        Icon="Images/app.png">
+        AllowsTransparency="True"
+        Icon="Images/app.png"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <Border Background="#ffffff">
+    <Border Background="#0F1923" 
+            CornerRadius="15"
+            BorderThickness="1"
+            BorderBrush="#FF4655">
+        <Border.Effect>
+            <DropShadowEffect Color="#FF4655" 
+                            BlurRadius="30" 
+                            ShadowDepth="0" 
+                            Opacity="0.4"/>
+        </Border.Effect>
+        
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="480*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="241*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Valorant Account Manager"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               Foreground="Black"
-               FontSize="28"
-               Margin="20,0,0,0"/>
-            <RadioButton Height="50"
-             Foreground="Black"
-             FontSize="18"
-             Style="{StaticResource MenuButtonTheme}"
-             Command="{Binding CurrentView.AddAccountCommand}"
-             Grid.Column="2">
-                <RadioButton.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Icon:PackIconMaterial Kind="Plus"
-                                   VerticalAlignment="Center"
-                                   Width="11"
-                                   Height="11"
-                                   Margin="0,3,8,0"/>
-                        <TextBlock Text="Add account"/>
-                    </StackPanel>
-                </RadioButton.Content>
-            </RadioButton>
-            <ContentControl Grid.Row="1"
-                            Margin="10,10,10,10" Grid.ColumnSpan="3"
-                            Content="{Binding CurrentView}"/>
-            <RadioButton Height="50"
-                         Width="200"
-             FontSize="18"
-             Style="{StaticResource MenuButtonTheme}"
-             Command="{Binding CurrentView.RefreshCommand}"
-             Grid.Column="1">
-                <RadioButton.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Icon:PackIconMaterial Kind="Refresh"
-                                   Width="14"
-                                   Height="14"
-                                   Margin="0,5,8,0"/>
-                        <TextBlock Text="Refresh"/>
-                    </StackPanel>
-                </RadioButton.Content>
-            </RadioButton>
-        </Grid>
 
+            <!-- Header -->
+            <Border Grid.Row="0" 
+                    Background="#1A232E"
+                    CornerRadius="15,15,0,0"
+                    BorderBrush="#2A3440"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Title -->
+                    <StackPanel Orientation="Horizontal" 
+                               VerticalAlignment="Center"
+                               Margin="25,0,0,0">
+                        <Border Width="6" 
+                               Height="35" 
+                               Background="#FF4655" 
+                               CornerRadius="3"
+                               Margin="0,0,15,0"/>
+                        <TextBlock Text="VALORANT" 
+                                  FontFamily="Segoe UI"
+                                  FontWeight="Bold"
+                                  FontSize="24"
+                                  Foreground="#FFFFFF"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text=" Account Manager" 
+                                  FontFamily="Segoe UI"
+                                  FontWeight="Light"
+                                  FontSize="24"
+                                  Foreground="#9CA3AF"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Refresh Button -->
+                    <RadioButton Grid.Column="1"
+                                Height="42"
+                                Width="130"
+                                Margin="0,0,12,0"
+                                FontSize="14"
+                                FontWeight="Medium"
+                                Style="{StaticResource MenuButtonTheme}"
+                                Command="{Binding CurrentView.RefreshCommand}">
+                        <RadioButton.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Icon:PackIconMaterial Kind="Refresh"
+                                                      Width="16"
+                                                      Height="16"
+                                                      VerticalAlignment="Center"
+                                                      Margin="0,0,8,0"/>
+                                <TextBlock Text="Refresh" 
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton.Content>
+                    </RadioButton>
+
+                    <!-- Add Account Button -->
+                    <RadioButton Grid.Column="2"
+                                Height="42"
+                                Width="160"
+                                Margin="0,0,12,0"
+                                FontSize="14"
+                                FontWeight="Medium"
+                                Style="{StaticResource MenuButtonTheme}"
+                                Command="{Binding CurrentView.AddAccountCommand}">
+                        <RadioButton.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Icon:PackIconMaterial Kind="Plus"
+                                                      Width="16"
+                                                      Height="16"
+                                                      VerticalAlignment="Center"
+                                                      Margin="0,0,8,0"/>
+                                <TextBlock Text="Add Account" 
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton.Content>
+                    </RadioButton>
+
+                    <!-- Window Controls -->
+                    <StackPanel Grid.Column="3" 
+                               Orientation="Horizontal"
+                               Margin="0,0,15,0">
+                        <Button Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0"
+                               Click="MinimizeButton_Click"
+                               Cursor="Hand">
+                            <Icon:PackIconMaterial Kind="WindowMinimize" 
+                                                  Width="16" 
+                                                  Height="16"
+                                                  Foreground="#9CA3AF"/>
+                        </Button>
+                        <Button Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0"
+                               Click="MaximizeButton_Click"
+                               Cursor="Hand">
+                            <Icon:PackIconMaterial Kind="WindowMaximize" 
+                                                  Width="16" 
+                                                  Height="16"
+                                                  Foreground="#9CA3AF"/>
+                        </Button>
+                        <Button Width="40" 
+                               Height="40"
+                               Background="Transparent"
+                               BorderThickness="0"
+                               Click="CloseButton_Click"
+                               Cursor="Hand">
+                            <Icon:PackIconMaterial Kind="Close" 
+                                                  Width="16" 
+                                                  Height="16"
+                                                  Foreground="#FF4655"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Content -->
+            <ContentControl Grid.Row="1"
+                          Margin="20"
+                          Content="{Binding CurrentView}"/>
+        </Grid>
     </Border>
 </Window>

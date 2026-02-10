@@ -9,113 +9,303 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="900">
-    <DataGrid ItemsSource="{Binding Accounts}"
-              MouseDoubleClick="DataGrid_MouseDoubleClick"
-          AutoGenerateColumns="False"
-          FontSize="16"
-              IsReadOnly="True"
-    CanUserAddRows="False"
-    CanUserDeleteRows="False"
-    SelectionUnit="Cell"
-    ClipboardCopyMode="ExcludeHeader">
-        <DataGrid.CellStyle>
-            <Style TargetType="DataGridCell">
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-            </Style>
-        </DataGrid.CellStyle>
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="NAME" Binding="{Binding Name}"/>
-            <DataGridTextColumn Header="TAG" Binding="{Binding Tag}"/>
-            <DataGridTextColumn Header="REGION" Binding="{Binding Region}"/>
-            <DataGridTemplateColumn Header="RANK">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image Source="{Binding RankIcon}"
-                       Width="30" Height="30"
-                       Margin="0,0,6,0"/>
-                            <TextBlock Text="{Binding Rank}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTextColumn Header="ELO" Binding="{Binding Elo}"/>
-            <DataGridTextColumn Header="LOGIN" Binding="{Binding LoginDisplay}"/>
-            <DataGridTextColumn Header="PASS"  Binding="{Binding PasswordDisplay}"/>
-            <DataGridTemplateColumn Header="TRN">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button
-                Command="{Binding DataContext.OpenTrackerCommand,
-                                  RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                CommandParameter="{Binding TrnLink}"
-                Background="Transparent"
-                BorderThickness="0"
-                Padding="0">
-                            <Image
-                    Source="{Binding TrackerIcon}"
-                    Width="30"
-                    Height="30"/>
-                        </Button>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="VTL">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button
-                Command="{Binding DataContext.OpenTrackerCommand,
-                                  RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                CommandParameter="{Binding VtlLink}"
-                Background="Transparent"
-                BorderThickness="0"
-                Padding="0">
 
-                            <Image Source="{Binding VtlIcon}"
-                       Width="22"
-                       Height="22"/>
-                        </Button>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="ACTIONS">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+    <Border Background="#1A232E" 
+            CornerRadius="10"
+            BorderBrush="#2A3440"
+            BorderThickness="1">
+        <DataGrid ItemsSource="{Binding Accounts}"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick"
+                  AutoGenerateColumns="False"
+                  FontSize="14"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  SelectionUnit="Cell"
+                  ClipboardCopyMode="ExcludeHeader"
+                  HeadersVisibility="Column"
+                  Background="#1A232E"
+                  BorderBrush="#2A3440"
+                  BorderThickness="0"
+                  GridLinesVisibility="None"
+                  RowBackground="#1A232E"
+                  AlternatingRowBackground="#1E2A38"
+                  Foreground="#E5E7EB">
+            
+            <DataGrid.Resources>
+                <!-- Column Header Style -->
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#242F3D"/>
+                    <Setter Property="Foreground" Value="#9CA3AF"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="Padding" Value="16,12"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                    <Setter Property="BorderBrush" Value="#FF4655"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
 
-                            <!-- DELETE -->
-                            <RadioButton
-                    Style="{StaticResource MenuButtonTheme}"
-                    Command="{Binding DataContext.DeleteAccountCommand,
-                                      RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                    CommandParameter="{Binding}"
-                    Width="40"
-                    Height="40">
-                                <Icon:PackIconMaterial Kind="Delete"
-                                           Width="18"
-                                           Height="18"
-                                           Foreground="#FF5555"/>
-                            </RadioButton>
+                <!-- Cell Style -->
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="16,8"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DataGridCell">
+                                <Border Background="{TemplateBinding Background}"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#2A3847"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
 
-                            <!-- SHOW LOGIN/PASS -->
-                            <RadioButton
-    Style="{StaticResource MenuButtonTheme}"
-    Command="{Binding DataContext.ToggleRevealCommand,
-                      RelativeSource={RelativeSource AncestorType=DataGrid}}"
-    CommandParameter="{Binding}"
-    Width="40"
-    Height="40">
+                <!-- Row Style -->
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Height" Value="60"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#242F3D"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#2A3847"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            
+            <DataGrid.Columns>
+                <!-- NAME Column -->
+                <DataGridTextColumn Header="NAME" 
+                                   Binding="{Binding Name}"
+                                   MinWidth="150">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontWeight" Value="Medium"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
-                                <Icon:PackIconMaterial Kind="Eye"
-                           Width="18"
-                           Height="18"/>
-                            </RadioButton>
+                <!-- TAG Column -->
+                <DataGridTextColumn Header="TAG" 
+                                   Binding="{Binding Tag}"
+                                   MinWidth="100">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#9CA3AF"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid.Columns>
+                <!-- REGION Column -->
+                <DataGridTextColumn Header="REGION" 
+                                   Binding="{Binding Region}"
+                                   MinWidth="100">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Foreground" Value="#FF4655"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
 
-    </DataGrid>
+                <!-- RANK Column -->
+                <DataGridTemplateColumn Header="RANK" MinWidth="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Border CornerRadius="6"
+                                       Padding="4"
+                                       Background="#242F3D">
+                                    <Image Source="{Binding RankIcon}"
+                                          Width="32" 
+                                          Height="32"/>
+                                </Border>
+                                <TextBlock Text="{Binding Rank}"
+                                          Margin="12,0,0,0"
+                                          FontWeight="Medium"
+                                          Foreground="#E5E7EB"
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- ELO Column -->
+                <DataGridTextColumn Header="ELO" 
+                                   Binding="{Binding Elo}"
+                                   MinWidth="80">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Foreground" Value="#10B981"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <!-- LOGIN Column -->
+                <DataGridTextColumn Header="LOGIN" 
+                                   Binding="{Binding LoginDisplay}"
+                                   MinWidth="150">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Consolas"/>
+                            <Setter Property="Foreground" Value="#9CA3AF"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <!-- PASS Column -->
+                <DataGridTextColumn Header="PASS" 
+                                   Binding="{Binding PasswordDisplay}"
+                                   MinWidth="150">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Consolas"/>
+                            <Setter Property="Foreground" Value="#9CA3AF"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <!-- TRN Column -->
+                <DataGridTemplateColumn Header="TRN" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.OpenTrackerCommand,
+                                            RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                   CommandParameter="{Binding TrnLink}"
+                                   Background="#242F3D"
+                                   BorderThickness="0"
+                                   Padding="8"
+                                   Cursor="Hand"
+                                   Width="40"
+                                   Height="40">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                           CornerRadius="8"
+                                                           Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FF4655"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Image Source="{Binding TrackerIcon}"
+                                      Width="24"
+                                      Height="24"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- VTL Column -->
+                <DataGridTemplateColumn Header="VTL" MinWidth="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.OpenTrackerCommand,
+                                            RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                   CommandParameter="{Binding VtlLink}"
+                                   Background="#242F3D"
+                                   BorderThickness="0"
+                                   Padding="8"
+                                   Cursor="Hand"
+                                   Width="40"
+                                   Height="40">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                           CornerRadius="8"
+                                                           Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FF4655"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Image Source="{Binding VtlIcon}"
+                                      Width="20"
+                                      Height="20"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- ACTIONS Column -->
+                <DataGridTemplateColumn Header="ACTIONS" MinWidth="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <!-- Eye Button -->
+                                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                                           Command="{Binding DataContext.ToggleRevealCommand,
+                                                           RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                           CommandParameter="{Binding}"
+                                           Width="40"
+                                           Height="40"
+                                           Margin="0,0,8,0">
+                                    <Border CornerRadius="8"
+                                           Padding="8"
+                                           Background="#242F3D">
+                                        <Icon:PackIconMaterial Kind="Eye"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Foreground="#3B82F6"/>
+                                    </Border>
+                                </RadioButton>
+
+                                <!-- Delete Button -->
+                                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                                           Command="{Binding DataContext.DeleteAccountCommand,
+                                                           RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                           CommandParameter="{Binding}"
+                                           Width="40"
+                                           Height="40">
+                                    <Border CornerRadius="8"
+                                           Padding="8"
+                                           Background="#242F3D">
+                                        <Icon:PackIconMaterial Kind="Delete"
+                                                             Width="20"
+                                                             Height="20"
+                                                             Foreground="#EF4444"/>
+                                    </Border>
+                                </RadioButton>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Border>
 </UserControl>
