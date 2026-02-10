@@ -53,6 +53,7 @@ namespace ValorantAccountManager.MVVM.ViewModel
         public ICommand AddFolderCommand { get; }
         public ICommand SelectFolderCommand { get; }
         public ICommand MoveToFolderCommand { get; }
+        public ICommand DeleteFolderCommand { get; }
 
         public HomeViewModel()
         {
@@ -75,6 +76,11 @@ namespace ValorantAccountManager.MVVM.ViewModel
             });
 
             MoveToFolderCommand = new RelayCommand(p => MoveToFolder(p as Account));
+            DeleteFolderCommand = new RelayCommand(
+    _ => DeleteSelectedFolder(),
+    _ => SelectedFolder != null && !SelectedFolder.IsDefault
+);
+
         }
 
         // ====== ЗАГРУЗКА ======
@@ -269,5 +275,20 @@ namespace ValorantAccountManager.MVVM.ViewModel
         {
             await LoadAsync();
         }
+        private async void DeleteSelectedFolder()
+        {
+            if (SelectedFolder == null || SelectedFolder.IsDefault)
+                return;
+
+            var folder = SelectedFolder;
+
+            SelectedFolder = Folders.First(f => f.IsDefault);
+
+            var db = new DatabaseService();
+            await db.DeleteFolderAsync(folder.Id);
+
+            Folders.Remove(folder);
+        }
+
     }
 }

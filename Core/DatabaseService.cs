@@ -175,5 +175,24 @@ namespace ValorantAccountManager.Core
 
             cmd.ExecuteNonQuery();
         }
+        public async Task DeleteFolderAsync(int folderId)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var cmd1 = connection.CreateCommand();
+            cmd1.CommandText = """
+        UPDATE accounts
+        SET FolderId = NULL
+        WHERE FolderId = $id
+    """;
+            cmd1.Parameters.AddWithValue("$id", folderId);
+            await cmd1.ExecuteNonQueryAsync();
+
+            var cmd2 = connection.CreateCommand();
+            cmd2.CommandText = "DELETE FROM Folders WHERE Id = $id";
+            cmd2.Parameters.AddWithValue("$id", folderId);
+            await cmd2.ExecuteNonQueryAsync();
+        }
     }
 }

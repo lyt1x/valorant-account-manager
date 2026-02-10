@@ -338,7 +338,8 @@
         BorderThickness="0,1,0,0"
         Padding="8">
 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
 
                     <!-- ПАПКИ -->
                     <ItemsControl ItemsSource="{Binding Folders}">
@@ -390,39 +391,102 @@
                     </ItemsControl>
 
                     <!-- КНОПКА + -->
-                    <Button Content="+"
-            Width="36"
-            Height="36"
-            Margin="4,0,0,0"
-            FontSize="18"
-            Background="#FF4655"
-            Foreground="White"
-            BorderThickness="0"
-            Command="{Binding AddFolderCommand}">
+                    <Button Width="32"
+        Height="32"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#FF4655"
+        BorderThickness="0"
+        Command="{Binding AddFolderCommand}">
                         <Button.Style>
                             <Style TargetType="Button">
+                                <Setter Property="Cursor" Value="Hand"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                   CornerRadius="6">
+                                            <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6">
                                                 <ContentPresenter HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"/>
+                                              VerticalAlignment="Center"/>
                                             </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#E63946"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#D62839"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#E63946"/>
-                                    </Trigger>
-                                </Style.Triggers>
                             </Style>
                         </Button.Style>
+
+                        <!-- 🔥 ИКОНКА -->
+                        <Icon:PackIconMaterial Kind="Plus"
+                           Width="16"
+                           Height="16"
+                           Foreground="White"/>
                     </Button>
 
-                </StackPanel>
+                    <!-- КНОПКА УДАЛЕНИЯ ПАПКИ -->
+                    <Button Width="32"
+        Height="32"
+        VerticalAlignment="Center"
+        Margin="4,0,0,0"
+        Background="#242F3D"
+        BorderThickness="0"
+        Command="{Binding DeleteFolderCommand}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#2E3A49"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#1E2933"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="border"
+                                        Property="Opacity"
+                                        Value="0.4"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
 
+                        <!-- 🔥 ИКОНКА -->
+                        <Icon:PackIconMaterial Kind="Minus"
+                           Width="16"
+                           Height="16"
+                           Foreground="#EF4444"/>
+                    </Button>
+
+
+                </StackPanel>
             </Border>
         </Grid>
     </Border>
