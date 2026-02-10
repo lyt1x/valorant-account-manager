@@ -38,6 +38,9 @@
     <None Update="Data\createdb.py">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="Data\folders.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\rank_png\Ascendant_1_Rank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

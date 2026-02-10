@@ -49,7 +49,7 @@ namespace ValorantAccountManager.MVVM.Model
                 OnPropertyChanged();
             }
         }
-        public string TrnLink { get; set; }
+        public string TrnLink => $"https://tracker.gg/valorant/profile/riot/{Uri.EscapeDataString(Name)}%23{Tag}/overview?platform=pc&playlist=competitive";
         public string TrackerIcon => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "trn.png");
         public string VtlLink => $"https://vtl.lol/id/{Name.Replace(" ", "+")}_{Tag}";
 
@@ -72,5 +72,15 @@ namespace ValorantAccountManager.MVVM.Model
 
         public string PasswordDisplay =>
             IsRevealed ? Password : "****************";
+        private int? _folderId;
+        public int? FolderId
+        {
+            get => _folderId;
+            set
+            {
+                _folderId = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace ValorantAccountManager.MVVM.View
             var column = grid.CurrentCell.Column?.Header?.ToString();
             if (column == "LOGIN")
                 Clipboard.SetText(acc.Login);
-            else if (column == "PASS")
+            else if (column == "PASSWORD")
                 Clipboard.SetText(acc.Password);
         }
     }

@@ -47,9 +47,5 @@ namespace ValorantAccountManager.MVVM.Model
 
         public ObservableCollection<Account> Accounts { get; set; }
             = new ObservableCollection<Account>();
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }
