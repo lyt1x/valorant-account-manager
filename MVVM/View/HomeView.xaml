@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="ValorantAccountManager.MVVM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ValorantAccountManager.MVVM.View"
+             xmlns:viewModel="clr-namespace:ValorantAccountManager.MVVM.ViewModel"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="900">
+    <DataGrid ItemsSource="{Binding Accounts}"
+              MouseDoubleClick="DataGrid_MouseDoubleClick"
+          AutoGenerateColumns="False"
+          FontSize="16"
+              IsReadOnly="True"
+    CanUserAddRows="False"
+    CanUserDeleteRows="False"
+    SelectionUnit="Cell"
+    ClipboardCopyMode="ExcludeHeader">
+        <DataGrid.CellStyle>
+            <Style TargetType="DataGridCell">
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="NAME" Binding="{Binding Name}"/>
+            <DataGridTextColumn Header="TAG" Binding="{Binding Tag}"/>
+            <DataGridTextColumn Header="REGION" Binding="{Binding Region}"/>
+            <DataGridTemplateColumn Header="RANK">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="{Binding RankIcon}"
+                       Width="30" Height="30"
+                       Margin="0,0,6,0"/>
+                            <TextBlock Text="{Binding Rank}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTextColumn Header="ELO" Binding="{Binding Elo}"/>
+            <DataGridTextColumn Header="LOGIN" Binding="{Binding LoginDisplay}"/>
+            <DataGridTextColumn Header="PASS"  Binding="{Binding PasswordDisplay}"/>
+            <DataGridTemplateColumn Header="TRN">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button
+                Command="{Binding DataContext.OpenTrackerCommand,
+                                  RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                CommandParameter="{Binding TrnLink}"
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="0">
+                            <Image
+                    Source="{Binding TrackerIcon}"
+                    Width="30"
+                    Height="30"/>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="VTL">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button
+                Command="{Binding DataContext.OpenTrackerCommand,
+                                  RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                CommandParameter="{Binding VtlLink}"
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="0">
+
+                            <Image Source="{Binding VtlIcon}"
+                       Width="22"
+                       Height="22"/>
+                        </Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="ACTIONS">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+
+                            <!-- DELETE -->
+                            <RadioButton
+                    Style="{StaticResource MenuButtonTheme}"
+                    Command="{Binding DataContext.DeleteAccountCommand,
+                                      RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                    CommandParameter="{Binding}"
+                    Width="40"
+                    Height="40">
+                                <Icon:PackIconMaterial Kind="Delete"
+                                           Width="18"
+                                           Height="18"
+                                           Foreground="#FF5555"/>
+                            </RadioButton>
+
+                            <!-- SHOW LOGIN/PASS -->
+                            <RadioButton
+    Style="{StaticResource MenuButtonTheme}"
+    Command="{Binding DataContext.ToggleRevealCommand,
+                      RelativeSource={RelativeSource AncestorType=DataGrid}}"
+    CommandParameter="{Binding}"
+    Width="40"
+    Height="40">
+
+                                <Icon:PackIconMaterial Kind="Eye"
+                           Width="18"
+                           Height="18"/>
+                            </RadioButton>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+
+    </DataGrid>
+</UserControl>

@@ -1,0 +1,165 @@
+﻿<Window x:Class="ValorantAccountManager.MVVM.View.FolderSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:core="clr-namespace:ValorantAccountManager.Core"
+        Title="Move to Folder"
+        Height="400"
+        Width="350"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.Resources>
+        <core:BoolToFolderIconConverter x:Key="BoolToFolderIconConverter"/>
+    </Window.Resources>
+
+    <Border Background="#0F1923" 
+            CornerRadius="12"
+            BorderThickness="1"
+            BorderBrush="#2A3440">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" 
+                            BlurRadius="20" 
+                            ShadowDepth="0" 
+                            Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0" 
+                    Background="#1A232E"
+                    CornerRadius="12,12,0,0"
+                    BorderBrush="#2A3440"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" 
+                               VerticalAlignment="Center"
+                               Margin="20,0,0,0">
+                        <Icon:PackIconMaterial Kind="FolderMove" 
+                                              Width="24" 
+                                              Height="24"
+                                              Foreground="#FF4655"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,12,0"/>
+                        <TextBlock Text="Move to Folder" 
+                                  FontSize="18"
+                                  FontWeight="SemiBold"
+                                  Foreground="#FFFFFF"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Width="40" 
+                           Height="40"
+                           Background="Transparent"
+                           BorderThickness="0"
+                           Click="CloseButton_Click"
+                           Cursor="Hand"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,10,0">
+                        <Icon:PackIconMaterial Kind="Close" 
+                                              Width="18" 
+                                              Height="18"
+                                              Foreground="#9CA3AF"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- Folder List -->
+            <ScrollViewer Grid.Row="1" 
+                         VerticalScrollBarVisibility="Auto"
+                         Margin="20">
+                <ItemsControl x:Name="FolderList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,0,8"
+                                   Background="#1A232E"
+                                   CornerRadius="8"
+                                   Cursor="Hand">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#242F3D"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" 
+                                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=SelectFolderCommand}"
+                                                 CommandParameter="{Binding}"/>
+                                </Border.InputBindings>
+
+                                <Grid Margin="16,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Icon:PackIconMaterial Grid.Column="0"
+                                                         Kind="{Binding IsDefault, Converter={StaticResource BoolToFolderIconConverter}}"
+                                                         Width="20"
+                                                         Height="20"
+                                                         VerticalAlignment="Center"
+                                                         Foreground="#E5E7EB"
+                                                         Margin="0,0,12,0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                              Text="{Binding Name}"
+                                              FontSize="15"
+                                              FontWeight="Medium"
+                                              Foreground="#E5E7EB"
+                                              VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Buttons -->
+            <Grid Grid.Row="2" Margin="20,0,20,20">
+                <Button Content="Cancel"
+                       Height="44"
+                       Background="#2A3440"
+                       Foreground="#9CA3AF"
+                       BorderThickness="0"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Cursor="Hand"
+                       Click="CloseButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                               CornerRadius="8">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3A4450"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
